@@ -1,0 +1,26 @@
+# rumdl configuration file
+
+[global]
+exclude = [
+  ".git",
+  ".github",
+  "**/CLAUDE.md",
+  "**/templates/*.md",
+  "build",
+  "node_modules",
+  "vendor",
+]
+flavor = "gfm"
+
+[MD033]
+allowed-elements = ["br"]
+
+[MD013]
+code-blocks = true
+headings = true
+line-length = 120
+paragraphs = true
+reflow = true
+reflow-mode = "normalize"
+strict = false
+tables = false
