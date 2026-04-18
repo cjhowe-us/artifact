@@ -1,6 +1,6 @@
 {
   "name": "artifact-documents",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Document artifact scheme + backends + templates. Ships a `document` scheme with `document-filesystem` and `document-confluence` backends plus eight markdown document templates (design, plan, review, release, test, requirement, user-story, triage).",
   "author": {
     "name": "Christian Howe",
