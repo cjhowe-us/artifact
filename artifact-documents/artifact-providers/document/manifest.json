@@ -1,5 +1,0 @@
-{
-  "name": "document",
-  "description": "Markdown document artifact scheme. A structured doc with YAML frontmatter + body. Backed by document-filesystem (local disk; default) or document-confluence (Confluence page).",
-  "contract_version": 1
-}

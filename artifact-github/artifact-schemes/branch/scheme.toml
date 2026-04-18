@@ -1,0 +1,8 @@
+name             = "branch"
+scheme           = "branch"
+kind             = "vertex"
+description      = "Git branch in a GitHub repo."
+contract_version = 1
+
+[[storage]]
+name = "gh-branch"

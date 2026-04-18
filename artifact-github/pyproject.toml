@@ -1,0 +1,18 @@
+[project]
+name = "artifact-github"
+version = "2.0.0.dev0"
+description = "GitHub schemes + storages for the cjhowe-us/artifact ecosystem."
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+dependencies = [
+  "artifact",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["scripts", "../artifact/scripts"]

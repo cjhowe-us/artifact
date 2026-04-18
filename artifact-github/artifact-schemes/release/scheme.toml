@@ -1,0 +1,8 @@
+name             = "release"
+scheme           = "release"
+kind             = "vertex"
+description      = "GitHub release."
+contract_version = 1
+
+[[storage]]
+name = "gh-release"

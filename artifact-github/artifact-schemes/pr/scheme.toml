@@ -1,0 +1,8 @@
+name             = "pr"
+scheme           = "pr"
+kind             = "vertex"
+description      = "GitHub pull request."
+contract_version = 1
+
+[[storage]]
+name = "gh-pr"

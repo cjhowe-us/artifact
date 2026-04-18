@@ -1,0 +1,8 @@
+name             = "user-config"
+description      = "Stores user-scoped configuration in $ARTIFACT_CONFIG_DIR."
+contract_version = 1
+backs_schemes    = ["preferences"]
+
+[capabilities]
+supports_locking = false
+supports_listing = true

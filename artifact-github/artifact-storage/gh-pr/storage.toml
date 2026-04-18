@@ -1,0 +1,8 @@
+name             = "gh-pr"
+description      = "Stores `pr` artifacts via the `gh` CLI."
+contract_version = 1
+backs_schemes    = ["pr"]
+
+[capabilities]
+supports_locking = false
+supports_listing = true

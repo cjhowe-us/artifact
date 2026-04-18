@@ -1,48 +1,49 @@
-# workflow-documents
+# artifact-documents
 
-Document artifact providers and a bundled set of document templates for the
-[`workflow`](../workflow) plugin.
+Document scheme + storages + templates for the `cjhowe-us/artifact` ecosystem.
 
-## Providers
+## Schemes
 
-| Name              | URI shape                                 | Notes                                  |
-|-------------------|-------------------------------------------|----------------------------------------|
-| `document`        | `document:<backend>/<id>`                 | Thin delegator; routes to `<backend>`  |
-| `confluence-page` | `confluence-page:<space>/<id>`            | Confluence Cloud REST v2               |
+| Scheme     | Kind   | Notes                                                                              |
+|------------|--------|------------------------------------------------------------------------------------|
+| `document` | vertex | Markdown body + structured content (title, authors, status). Validated by pydantic. |
 
-`document` defaults to `file-local` when `<backend>` is omitted. `confluence-page` needs
-`CONFLUENCE_BASE_URL`, `CONFLUENCE_USER`, and `CONFLUENCE_TOKEN` in the environment.
+## Storages
 
-## Templates (one skill, eight assets)
+| Storage               | Backs              | Notes                                           |
+|-----------------------|--------------------|-------------------------------------------------|
+| `document-confluence` | `document`         | Confluence Cloud REST v2. Env: `CONFLUENCE_BASE_URL`, `CONFLUENCE_USER`, `CONFLUENCE_TOKEN`. |
 
-Follows the Claude Code skill+template convention. One skill, `document-templates`, bundles eight
-fill-in markdown shells as assets. The worker picks the matching shell by name when a workflow step
-declares `template: <name>` or when the user asks for one of these schemes.
+`document` can also be stored in core's `file` storage — that's the default for local authoring.
 
-| Template name          | Purpose                                 |
-|------------------------|------------------------------------------|
-| `design-document`      | Subsystem / feature design               |
-| `implementation-plan`  | Task breakdown for a planned change      |
-| `review-note`          | Review findings + verdict                |
-| `release-note`         | User-facing release summary              |
-| `test-plan`            | Strategy + cases + oracles               |
-| `requirement`          | Goal + acceptance criteria               |
-| `user-story`           | As-a / I-want-to / So-that               |
-| `triage-note`          | Observed / hypothesis / next-check       |
+## Templates
 
-Shells live at `skills/document-templates/templates/<name>.md`; parameter manifests at
-`skills/document-templates/manifests/<name>.json`.
+Eight fill-in templates live under `artifact-templates/`. Each is a pair of files:
 
-Customize: copy a shell to workspace scope (`$REPO/.claude/document-templates/templates/<name>.md`)
-or user scope to shadow the plugin's version. The plugin's own shell is never edited in place.
+- `<name>.jinja.md` — body (jinja2).
+- `<name>.content.toml` — template metadata (name, inputs, output path template, produced artifact content shape).
+
+| Template name         | Produces                             |
+|-----------------------|--------------------------------------|
+| `design-document`     | Subsystem / feature design            |
+| `implementation-plan` | Task breakdown for a planned change   |
+| `review-note`         | Review findings + verdict             |
+| `release-note`        | User-facing release summary           |
+| `test-plan`           | Strategy + cases + oracles            |
+| `requirement`         | Goal + acceptance criteria            |
+| `user-story`          | As-a / I-want-to / So-that            |
+| `triage-note`         | Observed / hypothesis / next-check    |
+
+Customize: copy a pair to workspace scope (`$REPO/.claude/artifact-templates/`) or user scope to shadow the shipped
+version. Shipped files are never edited in place.
 
 ## Install
 
 ```bash
-claude plugin install workflow-documents@cjhowe-us-workflow
+claude plugin install artifact-documents@cjhowe-us-marketplace
 ```
 
-Requires `workflow >= 1.0.0`.
+Requires `artifact >= 2.0.0`.
 
 ## License
 

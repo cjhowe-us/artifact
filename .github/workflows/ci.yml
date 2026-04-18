@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Cancel in-flight runs for the same PR/branch.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: pytest ${{ matrix.os }} py${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python }}
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      # Cache the pip download wheel store so Windows/macOS don't re-download
+      # pydantic/tomlkit/jinja2 every run. Key on python version + lock inputs
+      # so a pyproject change invalidates the cache.
+      - name: Cache pip wheels
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ steps.setup-python.outputs.cache-hit && '' || '' }}
+            ~/.cache/pip
+            ~/AppData/Local/pip/Cache
+            ~/Library/Caches/pip
+          key: pip-${{ runner.os }}-py${{ matrix.python }}-${{ hashFiles('artifact/pyproject.toml', 'artifact-documents/pyproject.toml', 'artifact-github/pyproject.toml') }}
+          restore-keys: |
+            pip-${{ runner.os }}-py${{ matrix.python }}-
+
+      # Cache the venv itself so a cache-hit means zero install time.
+      - name: Cache venv
+        id: cache-venv
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-py${{ matrix.python }}-${{ hashFiles('artifact/pyproject.toml', 'artifact-documents/pyproject.toml', 'artifact-github/pyproject.toml') }}
+
+      - name: Create venv + install deps
+        if: steps.cache-venv.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate 2>/dev/null || source .venv/Scripts/activate
+          python -m pip install --upgrade pip
+          python -m pip install "pydantic>=2,<3" "tomlkit>=0.13" "jinja2>=3.1" "pytest>=8" "pytest-xdist>=3"
+
+      - name: Configure git identity
+        shell: bash
+        run: |
+          git config --global user.email "ci@example.com"
+          git config --global user.name "CI"
+
+      - name: Activate venv + run pytest
+        shell: bash
+        run: |
+          source .venv/bin/activate 2>/dev/null || source .venv/Scripts/activate
+          python -m pytest -q artifact/tests artifact-documents/tests artifact-github/tests

@@ -1,0 +1,10 @@
+name             = "closes"
+scheme           = "closes"
+kind             = "edge"
+description      = "This artifact (PR) closes the target (issue). Any resolves semantics."
+contract_version = 1
+
+[[storage]]
+name          = "file"
+path_template = "artifact-edges/closes/{{ source | slug }}--{{ target | slug }}.json"
+serializer    = "json"

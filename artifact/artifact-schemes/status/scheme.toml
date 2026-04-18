@@ -1,0 +1,10 @@
+name             = "status"
+scheme           = "status"
+kind             = "metadata"
+description      = "A single status string attached to the target artifact."
+contract_version = 1
+
+[[storage]]
+name          = "file"
+path_template = "artifact-metadata/status/{{ target | slug }}.json"
+serializer    = "json"

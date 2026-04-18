@@ -1,0 +1,28 @@
+name = "requirement"
+target_scheme = "document"
+description = "Fill-in markdown template for requirement."
+contract_version = 1
+
+[[inputs]]
+name = "id"
+type = "string"
+required = true
+
+[[inputs]]
+name = "title"
+type = "string"
+required = true
+
+[[inputs]]
+name = "priority"
+type = "string"
+required = false
+default = "p2"
+
+[output]
+path_template = "docs/requirements/{{ id }}"
+
+[output.create_input]
+id = "{{ id }}"
+title = "{{ title }}"
+priority = "{{ priority }}"

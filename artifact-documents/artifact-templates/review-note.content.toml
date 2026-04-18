@@ -1,0 +1,27 @@
+name = "review-note"
+target_scheme = "document"
+description = "Fill-in markdown template for review note."
+contract_version = 1
+
+[[inputs]]
+name = "subject"
+type = "string"
+required = true
+
+[[inputs]]
+name = "subject_ref"
+type = "artifact_uri"
+required = true
+
+[[inputs]]
+name = "reviewer"
+type = "string"
+required = true
+
+[output]
+path_template = "docs/reviews/{{ subject | slug }}-review"
+
+[output.create_input]
+subject_ref = "{{ subject_ref }}"
+reviewer = "{{ reviewer }}"
+verdict = "pending"

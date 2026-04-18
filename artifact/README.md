@@ -1,72 +1,62 @@
 # artifact
 
-The artifact plugin. Owns three things:
+Core artifact primitive for the `cjhowe-us/artifact` ecosystem. Ships:
 
-1. **Artifact** — any file, record, or external-system object the system touches.
-2. **Artifact template** — a directory bundle that produces an artifact when instantiated.
-3. **Artifact provider** — a script bundle that implements CRUD on one artifact scheme.
+- **Scheme kinds** — `vertex`, `edge`, `metadata`. Every scheme declares one.
+- **Core schemes** — `artifact-template`, `pydantic-schema`, `preferences`, `conversation`, `notifications`. Plus nine
+  edge-kind schemes (`composed_of`, `depends_on`, `validates`, `references`, `mentions`, `supersedes`, `cites`,
+  `bundled_in`, `closes`) via a shared factory. Plus metadata-kind schemes (`authors`, `tags`, `status`).
+- **Core storages** — `file` (git worktree), `user-config`, `session-memory`, `os-notifications`.
+- **Generic mediator** — validates every subcommand's inputs and outputs via pydantic, dispatches to storages.
+- **Jinja templating** — `.jinja.*` file naming convention drives rendering via `artifactlib.render`.
+- **Graph** — every edge is an artifact; `graph.py` is a thin wrapper over `list` with relation + endpoint filters.
+- **`/artifact` skill** — user entry point.
 
-Everything else in the plugin (the `/artifact` entry skill, the registry, dispatch scripts, JSON schemas, conformance
-tests) is machinery in service of those three concepts.
+Zero runtime deps besides Python 3.11+, `pydantic>=2`, `tomlkit>=0.13`, `jinja2>=3.1`. Cross-platform.
 
-Zero plugin dependencies. Needs `gh`, `git`, `jq`, `bash` on PATH.
+Source of truth: [`DESIGN.md`](./DESIGN.md).
 
 ## Install
 
 ```bash
-claude plugin marketplace add cjhowe-us/workflow
-claude plugin install artifact@cjhowe-us-workflow
+claude plugin marketplace add cjhowe-us/marketplace
+claude plugin install artifact@cjhowe-us-marketplace
 ```
 
-Other plugins in the ecosystem (workflow, artifact-github, artifact-documents, workflow-sdlc) all depend on this.
+Other ecosystem plugins (`artifact-github`, `artifact-documents`, `workflow`) depend on this one.
 
-## Architecture
-
-Two primitives split across two reference plugins:
-
-| Plugin      | Concern                                                |
-|-------------|--------------------------------------------------------|
-| `artifact`  | Artifacts + templates + providers (this plugin)         |
-| `workflow`  | Workflows + workers + orchestration (separate plugin)   |
-
-Domain extensions (`artifact-github`, `artifact-documents`) ship additional providers. `workflow-sdlc` ships composable
-templates and canned workflows.
-
-## Artifact template shape
-
-Each template is a directory:
+## Layout
 
 ```text
-artifact-templates/<name>/
-  manifest.json        # required
-  instantiate.sh       # required, executable — produces the artifact
-  README.md            # optional
-  schema.json          # optional — JSON schema for validated inputs
-  template.md          # optional — markdown shell with {{ placeholder }} fields
-  request.json.tmpl    # optional — any companion assets the entry_script reads
-  examples/            # optional — sample outputs
+artifact/
+  DESIGN.md
+  scripts/
+    artifactlib/           # shared Python package — kinds, scheme loader, storages, graph, mediator
+    run-provider.py        # dispatch CLI
+    graph.py               # graph CLI
+  hooks/
+    sessionstart-discover.py
+    hooks.json
+  artifact-schemes/        # one dir per scheme: scheme.toml + scheme.py + README.md
+  artifact-storage/        # one dir per storage: storage.toml + storage.py + README.md
+  tests/                   # pytest
 ```
 
-Instantiation flow:
+## URI format
 
-1. `/artifact create <template>` resolves the template via the registry.
-2. `instantiate-template.sh` validates incoming inputs against the manifest.
-3. Execs `<template-dir>/<entry_script>` with inputs as JSON on stdin and the template directory path as argv[1].
-4. The script emits `{"uri": "..."}` on stdout for the newly-created artifact.
+```text
+<scheme>|<storage>/<path>
+```
 
-Deterministic bash throughout — no LLM in the instantiation path. Authors ship any shape they want inside
-`instantiate.sh` and its companion assets.
+Examples:
 
-## Provider contract
+- `document|file/docs/design/auth` — a document vertex stored as `docs/design/auth.md` + `.content.toml`.
+- `composed_of|file/<source-slug>--<target-slug>` — an edge artifact JSON.
+- `preferences|user-config/user` — the user's preferences bundle.
 
-See [`contracts/artifact-provider.schema.json`](contracts/artifact-provider.schema.json) and the core
-`artifact-contract` reference under `skills/artifact/references/`.
+## Prerequisites
 
-Each provider ships `<plugin>/artifact-providers/<name>/` with:
-
-- `manifest.json` — name, description, contract_version, optional min_poll_interval_s.
-- `artifact.sh` — executable implementing get / create / update / list / lock / release / status / progress subcommands.
-- `README.md` — backend-specific notes (recommended).
+Python 3.11+ with `pydantic>=2`, `tomlkit>=0.13`, `jinja2>=3.1`. `git` on `PATH`.
 
 ## License
 

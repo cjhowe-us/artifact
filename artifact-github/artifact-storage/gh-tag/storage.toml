@@ -1,0 +1,8 @@
+name             = "gh-tag"
+description      = "Stores `tag` artifacts via the `gh` CLI."
+contract_version = 1
+backs_schemes    = ["tag"]
+
+[capabilities]
+supports_locking = false
+supports_listing = true

@@ -1,0 +1,8 @@
+name             = "milestone"
+scheme           = "milestone"
+kind             = "vertex"
+description      = "GitHub milestone."
+contract_version = 1
+
+[[storage]]
+name = "gh-milestone"

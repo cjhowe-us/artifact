@@ -1,0 +1,8 @@
+name             = "gh-gist"
+description      = "Stores `gist` artifacts via the `gh` CLI."
+contract_version = 1
+backs_schemes    = ["gist"]
+
+[capabilities]
+supports_locking = false
+supports_listing = true

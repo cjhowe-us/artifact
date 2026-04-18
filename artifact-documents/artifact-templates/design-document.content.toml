@@ -1,0 +1,23 @@
+name = "design-document"
+target_scheme = "document"
+description = "Fill-in markdown template for design document."
+contract_version = 1
+
+[[inputs]]
+name = "title"
+type = "string"
+required = true
+
+[[inputs]]
+name = "author"
+type = "string"
+required = true
+
+[output]
+path_template = "docs/design/{{ title | slug }}"
+
+[output.create_input]
+title = "{{ title }}"
+authors = ["{{ author }}"]
+status = "draft"
+related_artifacts = []

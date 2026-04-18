@@ -1,0 +1,8 @@
+name             = "gist"
+scheme           = "gist"
+kind             = "vertex"
+description      = "GitHub gist."
+contract_version = 1
+
+[[storage]]
+name = "gh-gist"

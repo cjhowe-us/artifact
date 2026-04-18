@@ -1,0 +1,13 @@
+name             = "artifact-template"
+scheme           = "artifact-template"
+kind             = "vertex"
+description      = "A template that produces an artifact of some target scheme."
+contract_version = 1
+
+# Templates in file storage: body file with .jinja. marker, companion content.toml.
+[[storage]]
+name                  = "file"
+body_field            = "body"
+body_path_template    = "artifact-templates/{{ id }}.jinja.md"
+content_path_template = "artifact-templates/{{ id }}.content.toml"
+content_serializer    = "toml"

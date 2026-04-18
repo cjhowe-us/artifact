@@ -1,0 +1,10 @@
+name             = "supersedes"
+scheme           = "supersedes"
+kind             = "edge"
+description      = "This artifact supersedes the target (newer replacement)."
+contract_version = 1
+
+[[storage]]
+name          = "file"
+path_template = "artifact-edges/supersedes/{{ source | slug }}--{{ target | slug }}.json"
+serializer    = "json"

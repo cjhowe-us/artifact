@@ -1,35 +1,31 @@
-# workflow-github
+# artifact-github
 
-GitHub artifact providers for the [`workflow`](../workflow) plugin. Required for teams using GitHub
-as the primary backend.
+GitHub schemes + storages for the `cjhowe-us/artifact` ecosystem.
 
-## Providers
+## Schemes (vertex-kind)
 
-| Name          | URI shape                              | Scheme                        |
-|---------------|----------------------------------------|------------------------------|
-| `gh-pr`       | `gh-pr:<owner>/<repo>/<n>`             | PR (assignee = owner lock)   |
-| `gh-issue`    | `gh-issue:<owner>/<repo>/<n>`          | Issue (assignee = owner lock)|
-| `gh-release`  | `gh-release:<owner>/<repo>/<tag>`      | Release (no lock)            |
-| `gh-milestone`| `gh-milestone:<owner>/<repo>/<n>`      | Milestone (no lock)          |
-| `gh-tag`      | `gh-tag:<owner>/<repo>/<tag>`          | Git tag (no lock)            |
-| `gh-branch`   | `gh-branch:<owner>/<repo>/<branch>`    | Git branch (no lock)         |
-| `gh-gist`     | `gh-gist:<gist-id>`                    | Gist (creator = owner)       |
+| Scheme      | URI shape                           | Notes                         |
+|-------------|-------------------------------------|-------------------------------|
+| `pr`        | `pr\|gh-pr/<owner>/<repo>/<n>`       | PR; assignee = owner lock     |
+| `issue`     | `issue\|gh-issue/<owner>/<repo>/<n>` | Issue; assignee = owner lock  |
+| `release`   | `release\|gh-release/<owner>/<repo>/<tag>`     | Release; no lock               |
+| `milestone` | `milestone\|gh-milestone/<owner>/<repo>/<n>`   | Milestone; no lock             |
+| `tag`       | `tag\|gh-tag/<owner>/<repo>/<tag>`             | Git tag; no lock               |
+| `branch`    | `branch\|gh-branch/<owner>/<repo>/<branch>`    | Git branch; no lock            |
+| `gist`      | `gist\|gh-gist/<gist-id>`                     | Gist; creator = owner          |
 
-Each provider ships `artifact.sh` implementing the
-[artifact-contract](../workflow/skills/contracts/artifact-contract/SKILL.md) subcommand surface.
+## Storages
+
+One storage per scheme: `gh-pr`, `gh-issue`, `gh-release`, `gh-milestone`, `gh-tag`, `gh-branch`, `gh-gist`. Each shells
+out to `gh` via `subprocess.run` (never `shell=True`).
 
 ## Install
 
 ```bash
-claude plugin install workflow-github@cjhowe-us-workflow
+claude plugin install artifact-github@cjhowe-us-marketplace
 ```
 
-Requires `workflow >= 1.0.0` and the `gh` CLI (`gh auth login`).
-
-## Defaults
-
-When the core plugin's `execution` provider looks up an implementation for `execution:`-scheme URIs,
-it resolves to `gh-pr` (since PRs are the natural backing). Other schemes resolve by name match.
+Requires `artifact >= 2.0.0` and the `gh` CLI (`gh auth login`).
 
 ## License
 

@@ -1,0 +1,8 @@
+name             = "gh-branch"
+description      = "Stores `branch` artifacts via the `gh` CLI."
+contract_version = 1
+backs_schemes    = ["branch"]
+
+[capabilities]
+supports_locking = false
+supports_listing = true

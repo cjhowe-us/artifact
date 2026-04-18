@@ -1,0 +1,10 @@
+name             = "validates"
+scheme           = "validates"
+kind             = "edge"
+description      = "A validator (typically a pydantic-schema) validates the target artifact."
+contract_version = 1
+
+[[storage]]
+name          = "file"
+path_template = "artifact-edges/validates/{{ source | slug }}--{{ target | slug }}.json"
+serializer    = "json"

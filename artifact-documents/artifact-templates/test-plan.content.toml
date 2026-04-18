@@ -1,0 +1,27 @@
+name = "test-plan"
+target_scheme = "document"
+description = "Fill-in markdown template for test plan."
+contract_version = 1
+
+[[inputs]]
+name = "title"
+type = "string"
+required = true
+
+[[inputs]]
+name = "owner"
+type = "string"
+required = true
+
+[[inputs]]
+name = "design_ref"
+type = "artifact_uri"
+required = false
+
+[output]
+path_template = "docs/test-plans/{{ title | slug }}"
+
+[output.create_input]
+title = "{{ title }}"
+design_ref = "{{ design_ref }}"
+owner = "{{ owner }}"

@@ -1,0 +1,8 @@
+name             = "os-notifications"
+description      = "Emits OS-level notifications via the platform's native notifier."
+contract_version = 1
+backs_schemes    = ["notifications"]
+
+[capabilities]
+supports_locking = false
+supports_listing = false

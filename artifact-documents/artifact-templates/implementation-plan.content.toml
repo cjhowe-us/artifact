@@ -1,0 +1,28 @@
+name = "implementation-plan"
+target_scheme = "document"
+description = "Fill-in markdown template for implementation plan."
+contract_version = 1
+
+[[inputs]]
+name = "title"
+type = "string"
+required = true
+
+[[inputs]]
+name = "owner"
+type = "string"
+required = true
+
+[[inputs]]
+name = "design_ref"
+type = "artifact_uri"
+required = false
+
+[output]
+path_template = "docs/plans/{{ title | slug }}"
+
+[output.create_input]
+title = "{{ title }}"
+owner = "{{ owner }}"
+design_ref = "{{ design_ref }}"
+status = "draft"

@@ -1,0 +1,10 @@
+name             = "authors"
+scheme           = "authors"
+kind             = "metadata"
+description      = "People who authored the target artifact."
+contract_version = 1
+
+[[storage]]
+name          = "file"
+path_template = "artifact-metadata/authors/{{ target | slug }}.json"
+serializer    = "json"

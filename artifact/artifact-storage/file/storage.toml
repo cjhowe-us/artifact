@@ -1,0 +1,26 @@
+name        = "file"
+description = "Stores artifacts as files under the git worktree."
+
+# Informational. Authoritative mapping is each scheme's [[storage]] entry.
+backs_schemes = [
+  "artifact-template",
+  "pydantic-schema",
+  "authors",
+  "tags",
+  "status",
+  "composed_of",
+  "depends_on",
+  "validates",
+  "references",
+  "mentions",
+  "supersedes",
+  "cites",
+  "bundled_in",
+  "closes",
+]
+contract_version = 1
+
+[capabilities]
+supports_locking = true
+supports_listing = true
+supports_watching = false

@@ -1,0 +1,8 @@
+name             = "notifications"
+scheme           = "notifications"
+kind             = "vertex"
+description      = "OS-level user notification."
+contract_version = 1
+
+[[storage]]
+name = "os-notifications"

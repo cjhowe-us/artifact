@@ -1,0 +1,36 @@
+name = "user-story"
+target_scheme = "document"
+description = "Fill-in markdown template for user story."
+contract_version = 1
+
+[[inputs]]
+name = "id"
+type = "string"
+required = true
+
+[[inputs]]
+name = "title"
+type = "string"
+required = true
+
+[[inputs]]
+name = "persona"
+type = "string"
+required = true
+
+[[inputs]]
+name = "want"
+type = "string"
+required = true
+
+[[inputs]]
+name = "benefit"
+type = "string"
+required = true
+
+[output]
+path_template = "docs/user-stories/{{ id }}"
+
+[output.create_input]
+id = "{{ id }}"
+title = "{{ title }}"

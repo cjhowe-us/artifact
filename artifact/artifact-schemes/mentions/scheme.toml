@@ -1,0 +1,10 @@
+name             = "mentions"
+scheme           = "mentions"
+kind             = "edge"
+description      = "This artifact mentions the target (soft, informational)."
+contract_version = 1
+
+[[storage]]
+name          = "file"
+path_template = "artifact-edges/mentions/{{ source | slug }}--{{ target | slug }}.json"
+serializer    = "json"

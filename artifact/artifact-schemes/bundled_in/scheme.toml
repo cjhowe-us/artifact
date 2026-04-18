@@ -1,0 +1,10 @@
+name             = "bundled_in"
+scheme           = "bundled_in"
+kind             = "edge"
+description      = "Inverse of composed_of — this artifact is bundled in the target."
+contract_version = 1
+
+[[storage]]
+name          = "file"
+path_template = "artifact-edges/bundled_in/{{ source | slug }}--{{ target | slug }}.json"
+serializer    = "json"

@@ -1,0 +1,10 @@
+name             = "references"
+scheme           = "references"
+kind             = "edge"
+description      = "This artifact references the target without depending on it."
+contract_version = 1
+
+[[storage]]
+name          = "file"
+path_template = "artifact-edges/references/{{ source | slug }}--{{ target | slug }}.json"
+serializer    = "json"

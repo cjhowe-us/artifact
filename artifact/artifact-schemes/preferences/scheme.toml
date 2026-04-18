@@ -1,0 +1,10 @@
+name             = "preferences"
+scheme           = "preferences"
+kind             = "vertex"
+description      = "User preferences (per-scheme default storage, WIP caps, tutor flags)."
+contract_version = 1
+
+[[storage]]
+name          = "user-config"
+path_template = "preferences/{{ id }}.json"
+serializer    = "json"

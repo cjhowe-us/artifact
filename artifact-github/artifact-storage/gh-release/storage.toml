@@ -1,0 +1,8 @@
+name             = "gh-release"
+description      = "Stores `release` artifacts via the `gh` CLI."
+contract_version = 1
+backs_schemes    = ["release"]
+
+[capabilities]
+supports_locking = false
+supports_listing = true

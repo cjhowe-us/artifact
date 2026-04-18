@@ -1,63 +1,90 @@
-# authoring
+# creation
 
-Shared plumbing for meta-workflows that create or edit workflows. Artifact templates are workflows
-too (a subkind); no separate authoring path for them. Three capabilities:
+How to author a new template, scheme, or storage. Templates are the common case; schemes and storages are rarer and
+follow the same scope rules.
 
-1. **Resolve** a target path for a new or existing workflow by `(scope, role, name)`, where `role`
-   is `workflows` for runnable workflows or `artifact-templates` for the subkind used as template
-   generators.
-2. **Validate** a candidate file against the `workflow-contract`.
-3. **Write** it out, refusing any path under a plugin root.
+## Template authoring
+
+A template is a pair of files in the same `artifact-templates/` directory:
+
+```text
+<name>.jinja.md                   # jinja2 body — rendered into the produced artifact
+<name>.content.toml               # template metadata (inputs, output mapping)
+```
+
+The `.content.toml`:
+
+```toml
+name             = "design-document"
+target_scheme    = "document"
+description      = "Fill-in markdown design doc."
+contract_version = 1
+
+[[inputs]]
+name = "title"
+type = "string"
+required = true
+
+[[inputs]]
+name = "author"
+type = "string"
+required = true
+
+[output]
+path_template = "docs/design/{{ title | slug }}"
+
+[output.create_input]
+title   = "{{ title }}"
+authors = ["{{ author }}"]
+status  = "draft"
+```
+
+Instantiate via the mediator:
+
+```bash
+echo '{"uri":"artifact-template|file/design-document","inputs":{"title":"Auth rework","author":"christian"},"target_storage":"file"}' | \
+  python3 <plugin>/scripts/run-provider.py 'artifact-template|file/design-document' instantiate
+```
+
+Produces `docs/design/auth-rework.md` + `docs/design/auth-rework.content.toml` + a `composed_of` edge artifact linking
+the document to its template.
 
 ## Scope resolution
 
-| Scope     | Target path (role = workflows)                      |
-|-----------|------------------------------------------------------|
-| override  | `$CWD/.workflow-override/workflows/<name>/SKILL.md`  |
-| workspace | `$REPO/.claude/workflows/<name>/SKILL.md`            |
-| user      | `$HOME/.claude/workflows/<name>/SKILL.md`            |
+Writes go to one of three writable scopes (plugin scope is never a write target):
 
-Replace `workflows` with `artifact-templates` when the workflow's role is to generate artifacts.
-Role is a directory-layout hint only — the file shape and contract are identical. Plugin scope is
-never a write target (enforced by `pretooluse-no-self-edit.sh`).
+| Scope     | Target path                                                                 |
+|-----------|-----------------------------------------------------------------------------|
+| override  | `$CWD/.artifact-override/artifact-templates/<name>.{jinja.md,content.toml}` |
+| workspace | `$REPO/.claude/artifact-templates/<name>.{jinja.md,content.toml}`           |
+| user      | `$HOME/.claude/artifact-templates/<name>.{jinja.md,content.toml}`           |
 
-## Validation
-
-Before any write, the authoring skill must invoke `tests/workflow-conformance.sh <path>` (or the
-template variant) and refuse to write a file that fails validation. Validation errors surface as
-plain blockers to the user so the meta-workflow can prompt for corrections interactively.
+Higher-precedence scopes shadow lower ones with the same name (override > workspace > user > plugin).
 
 ## Write refusal under plugin roots
 
-All writes go through a path guard that rejects any target under an installed plugin's root.
-Double-enforced by the `PreToolUse` hook as a backstop; the skill's own refusal path gives a cleaner
-error message before the hook ever fires.
+All writes go through a guard that rejects any target under an installed plugin's root. Plugin files are immutable to
+agents; change them by opening a PR to the plugin repo.
 
-## Flow for `author` meta-workflow
+## Validation
 
-1. **draft** step: collect name, description, inputs/outputs, graph via `AskUserQuestion`.
-2. **review** step: render the draft, allow edits, run conformance check.
-3. **write** step: resolve target path from chosen scope, write the file, re-run conformance on the
-   committed version.
+Before write, the authoring flow runs:
 
-Each step in the meta-workflow writes its partial artifact to the execution provider so the draft
-survives session restarts and can be resumed.
+1. `toml.load` on `<name>.content.toml` — must parse.
+2. Pydantic validation of the content against the `artifact-template` scheme's content model (inputs list, output
+   mapping, etc.).
+3. Jinja2 `env().parse()` on the body — must compile.
 
-## Flow for `update`
+Failures surface as blockers; the meta-workflow can prompt for corrections.
 
-1. **load** step: resolve URI to a concrete file path (respects scope precedence). Refuse if path
-   resolves to plugin scope.
-2. **edit** step: apply the user's edit instructions to the file contents.
-3. **write** step: conformance check, then write + verify.
+## Scheme / storage authoring
 
-## Flow for `review`
+See `extension-scaffold.md`. Both live at the plugin root (not inside `skills/`) and are discovered by
+`scripts/discover.py`:
 
-1. **load** — resolve URI + read file.
-2. **critique** — run conformance + heuristic checks (naming, step-id uniqueness, input/output
-   coverage, dynamic-branch reachability).
-3. **report** — emit findings as a set of suggested edits. Never writes.
+```text
+artifact-schemes/<name>/{scheme.toml, scheme.py, README.md}
+artifact-storage/<name>/{storage.toml, storage.py, README.md}
+```
 
-## Provider integration
-
-Authoring meta-workflows use the `file-local` artifact provider for writes. That provider's
-`create`/`update`/`get` are the transport; it takes care of locking and progress logging.
+Scheme authors write Pydantic models for each subcommand; storage authors write `cmd_<subcommand>` functions.

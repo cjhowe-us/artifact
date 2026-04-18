@@ -1,0 +1,10 @@
+name             = "tags"
+scheme           = "tags"
+kind             = "metadata"
+description      = "Free-form tags attached to the target artifact."
+contract_version = 1
+
+[[storage]]
+name          = "file"
+path_template = "artifact-metadata/tags/{{ target | slug }}.json"
+serializer    = "json"

@@ -1,0 +1,13 @@
+name             = "pydantic-schema"
+scheme           = "pydantic-schema"
+kind             = "vertex"
+description      = "A Pydantic model that validates some other scheme's content."
+contract_version = 1
+
+# Body is a .py file containing a BaseModel subclass.
+[[storage]]
+name                  = "file"
+body_field            = "body"
+body_path_template    = "artifact-schemas/{{ id }}.py"
+content_path_template = "artifact-schemas/{{ id }}.content.toml"
+content_serializer    = "toml"

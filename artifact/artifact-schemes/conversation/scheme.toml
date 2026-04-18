@@ -1,0 +1,8 @@
+name             = "conversation"
+scheme           = "conversation"
+kind             = "vertex"
+description      = "A conversation thread — transient or persisted."
+contract_version = 1
+
+[[storage]]
+name = "session-memory"

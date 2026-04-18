@@ -1,0 +1,8 @@
+name             = "tag"
+scheme           = "tag"
+kind             = "vertex"
+description      = "Git tag in a GitHub repo."
+contract_version = 1
+
+[[storage]]
+name = "gh-tag"

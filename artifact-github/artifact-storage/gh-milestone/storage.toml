@@ -1,0 +1,8 @@
+name             = "gh-milestone"
+description      = "Stores `milestone` artifacts via the `gh` CLI."
+contract_version = 1
+backs_schemes    = ["milestone"]
+
+[capabilities]
+supports_locking = false
+supports_listing = true

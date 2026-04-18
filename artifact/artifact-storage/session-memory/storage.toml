@@ -1,0 +1,8 @@
+name             = "session-memory"
+description      = "In-process ephemeral storage for conversations and notifications."
+contract_version = 1
+backs_schemes    = ["conversation"]
+
+[capabilities]
+supports_locking = false
+supports_listing = true

@@ -1,0 +1,33 @@
+name = "triage-note"
+target_scheme = "document"
+description = "Fill-in markdown template for triage note."
+contract_version = 1
+
+[[inputs]]
+name = "title"
+type = "string"
+required = true
+
+[[inputs]]
+name = "incident_ref"
+type = "artifact_uri"
+required = false
+
+[[inputs]]
+name = "triaged_by"
+type = "string"
+required = true
+
+[[inputs]]
+name = "severity"
+type = "string"
+required = false
+default = "sev-3"
+
+[output]
+path_template = "docs/triage/{{ title | slug }}"
+
+[output.create_input]
+incident_ref = "{{ incident_ref }}"
+triaged_by = "{{ triaged_by }}"
+severity = "{{ severity }}"

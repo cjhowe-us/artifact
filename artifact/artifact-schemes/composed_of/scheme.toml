@@ -1,0 +1,10 @@
+name             = "composed_of"
+scheme           = "composed_of"
+kind             = "edge"
+description      = "Parent artifact composed of a child (directory→file, template→produced, release→PR)."
+contract_version = 1
+
+[[storage]]
+name          = "file"
+path_template = "artifact-edges/composed_of/{{ source | slug }}--{{ target | slug }}.json"
+serializer    = "json"

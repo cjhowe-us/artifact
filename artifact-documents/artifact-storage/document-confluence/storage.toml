@@ -1,0 +1,13 @@
+name             = "document-confluence"
+description      = "Stores `document` artifacts as Confluence Cloud pages (REST v2)."
+contract_version = 1
+backs_schemes    = ["document"]
+
+[capabilities]
+supports_locking = false
+supports_listing = true
+
+[env]
+base_url_env = "CONFLUENCE_BASE_URL"
+user_env     = "CONFLUENCE_USER"
+token_env    = "CONFLUENCE_TOKEN"

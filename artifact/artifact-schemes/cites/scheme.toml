@@ -1,0 +1,10 @@
+name             = "cites"
+scheme           = "cites"
+kind             = "edge"
+description      = "This artifact cites the target (attribution / quotation)."
+contract_version = 1
+
+[[storage]]
+name          = "file"
+path_template = "artifact-edges/cites/{{ source | slug }}--{{ target | slug }}.json"
+serializer    = "json"

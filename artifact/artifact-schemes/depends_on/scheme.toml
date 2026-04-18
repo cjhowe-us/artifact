@@ -1,0 +1,10 @@
+name             = "depends_on"
+scheme           = "depends_on"
+kind             = "edge"
+description      = "This artifact depends on the target (gating relation used by workflows)."
+contract_version = 1
+
+[[storage]]
+name          = "file"
+path_template = "artifact-edges/depends_on/{{ source | slug }}--{{ target | slug }}.json"
+serializer    = "json"

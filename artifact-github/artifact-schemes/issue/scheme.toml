@@ -1,0 +1,8 @@
+name             = "issue"
+scheme           = "issue"
+kind             = "vertex"
+description      = "GitHub issue."
+contract_version = 1
+
+[[storage]]
+name = "gh-issue"

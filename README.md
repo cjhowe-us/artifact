@@ -1,17 +1,16 @@
 # artifact — Claude Code plugin ecosystem
 
-Primitive plugins for working with artifacts (PRs, issues, documents, executions, templates, …)
-from a Claude Code session. Three plugins ship here:
+Primitive plugins for working with artifacts — documents, PRs, issues, templates, conversations, notifications, and any
+user-authored scheme — from a Claude Code session. Artifacts form a typed knowledge graph. Three plugins ship here:
 
-| Plugin               | Purpose |
-|----------------------|---------|
-| [`artifact`](./artifact)             | Core primitive: schemes, backends, templates, graph, `/artifact` skill. Zero plugin deps. |
-| [`artifact-github`](./artifact-github) | GitHub-backed backends (`gh-pr`, `gh-issue`, `gh-release`, `gh-milestone`, `gh-tag`, `gh-branch`, `gh-gist`) for the `pr`, `issue`, `release`, `milestone`, `tag`, `branch`, `gist` schemes. Requires `artifact`. |
-| [`artifact-documents`](./artifact-documents) | Document scheme + `document-filesystem` / `document-confluence` backends + eight markdown templates. Requires `artifact`. |
+| Plugin                                       | Purpose                                                                                                                                    |
+|----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| [`artifact`](./artifact)                     | Core primitive: scheme kinds (vertex/edge/metadata), Pydantic scheme loader, generic storages (`file`, `user-config`, `session-memory`, `os-notifications`), jinja templating, `/artifact` skill. |
+| [`artifact-github`](./artifact-github)       | GitHub-backed storages (`gh-pr`, `gh-issue`, `gh-release`, `gh-milestone`, `gh-tag`, `gh-branch`, `gh-gist`) for the corresponding schemes. Requires `artifact`. |
+| [`artifact-documents`](./artifact-documents) | `document` scheme + `document-confluence` storage + eight markdown templates. Requires `artifact`.                                         |
 
-See [`artifact/DESIGN.md`](./artifact/DESIGN.md) for the architectural source of truth —
-three concepts (provider = scheme type, backend = storage, artifact = instance), the typed edge
-graph, URI format (`<scheme>|<backend>/<path>`), backend resolution, local state layout.
+See [`artifact/DESIGN.md`](./artifact/DESIGN.md) for the architectural source of truth — scheme kinds, storage adapters,
+URI format (`<scheme>|<storage>/<path>`), the graph-as-artifacts model, and local state layout.
 
 ## Install
 
@@ -24,8 +23,12 @@ claude plugin install artifact-documents@cjhowe-us-marketplace     # optional
 
 ## Prerequisites
 
-- `bash`, `jq`, `git`, `python3` on `PATH`.
+- Python ≥ 3.11 with `pydantic>=2`, `tomlkit>=0.13`, `jinja2>=3.1` on the path the plugin uses. Install once:
+  `python3 -m pip install --user pydantic tomlkit jinja2`.
+- `git` on `PATH`.
 - `gh` authenticated (`gh auth login`) if using `artifact-github`.
+
+Cross-platform: Linux, macOS, Windows.
 
 ## License
 

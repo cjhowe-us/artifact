@@ -1,0 +1,8 @@
+name             = "gh-issue"
+description      = "Stores `issue` artifacts via the `gh` CLI."
+contract_version = 1
+backs_schemes    = ["issue"]
+
+[capabilities]
+supports_locking = false
+supports_listing = true
