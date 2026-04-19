@@ -3,14 +3,10 @@
 from __future__ import annotations
 
 import importlib.util
-import json
 from pathlib import Path
-
-import pytest
 
 from artifactlib import scheme as scheme_mod
 from artifactlib.edges import make_edge_scheme
-
 
 REPO = Path(__file__).resolve().parent.parent
 

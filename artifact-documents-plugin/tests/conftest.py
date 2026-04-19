@@ -30,9 +30,9 @@ def tmp_worktree(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
 
 @pytest.fixture
 def registry(tmp_worktree: Path) -> dict:
-    import discover  # type: ignore
-    import json
     import os
+
+    import discover  # type: ignore
 
     discover.main()
     return __import__("json").loads(

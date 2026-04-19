@@ -16,7 +16,6 @@ if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
 from artifactlib import uri as uri_mod
-from artifactlib_gh import gh
 
 
 def _id(uri_str: str) -> str:

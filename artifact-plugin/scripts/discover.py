@@ -238,7 +238,7 @@ def main() -> int:
                     f"but scheme={sn!r} lacks a matching [[storage]] entry"
                 )
 
-    now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    now = datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     registry = {"generated_at": now, "entries": all_entries, "warnings": warnings}
     out = dirs.cache / "registry.json"
     out.write_text(json.dumps(registry, indent=2) + "\n")

@@ -24,7 +24,6 @@ writes JSON result to stdout. Exits:
 from __future__ import annotations
 
 import json
-import os
 import sys
 from pathlib import Path
 
@@ -32,10 +31,10 @@ HERE = Path(__file__).resolve().parent
 if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
-from artifactlib import registry, uri as uri_mod  # noqa: E402
+from artifactlib import registry  # noqa: E402
+from artifactlib import uri as uri_mod
 from artifactlib.provider import dispatch  # noqa: E402
 from artifactlib.validate import SCHEMA_MISMATCH_EXIT, emit_schema_mismatch  # noqa: E402
-
 from pydantic import ValidationError  # noqa: E402
 
 

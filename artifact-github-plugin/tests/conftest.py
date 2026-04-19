@@ -18,9 +18,7 @@ for p in (CORE_SCRIPTS, GH_SCRIPTS):
 
 @pytest.fixture
 def tmp_worktree(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
-    subprocess.run(
-        ["git", "init", "-q", str(tmp_path)], check=True, stdout=subprocess.DEVNULL
-    )
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True, stdout=subprocess.DEVNULL)
     monkeypatch.chdir(tmp_path)
     monkeypatch.setenv("ARTIFACT_CONFIG_DIR", str(tmp_path / ".artifact-config"))
     monkeypatch.setenv("ARTIFACT_CACHE_DIR", str(tmp_path / ".artifact-cache"))

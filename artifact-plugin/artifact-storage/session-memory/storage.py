@@ -10,7 +10,6 @@ from typing import Any
 
 from artifactlib import uri as uri_mod
 
-
 _STORE: dict[str, dict[str, Any]] = {}
 
 

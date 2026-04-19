@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import pytest
-
 from artifactlib import render
 
 
@@ -34,9 +33,8 @@ def test_is_jinja_false():
 
 def test_rendered_name_strips_jinja():
     assert render.rendered_name("design.jinja.md") == Path("design.md")
-    assert (
-        render.rendered_name("artifact-templates/x.jinja.toml")
-        == Path("artifact-templates/x.toml")
+    assert render.rendered_name("artifact-templates/x.jinja.toml") == Path(
+        "artifact-templates/x.toml"
     )
 
 

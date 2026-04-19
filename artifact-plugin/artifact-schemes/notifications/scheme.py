@@ -4,10 +4,9 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseModel, Field
-
 from artifactlib.kinds import Kind
 from artifactlib.scheme import Scheme, Subcommand
+from pydantic import BaseModel, Field
 
 
 class Notification(BaseModel):
@@ -59,9 +58,9 @@ SCHEME = Scheme(
     contract_version=1,
     content_model=Notification,
     subcommands={
-        "create": Subcommand(in_model=CreateIn,   out_model=CreateOut, required=True),
-        "get":    Subcommand(in_model=GetIn,      out_model=GetOut,    required=False),
-        "status": Subcommand(in_model=StatusIn,   out_model=StatusOut, required=True),
-        "list":   Subcommand(in_model=ListFilter, out_model=ListOut,   required=False),
+        "create": Subcommand(in_model=CreateIn, out_model=CreateOut, required=True),
+        "get": Subcommand(in_model=GetIn, out_model=GetOut, required=False),
+        "status": Subcommand(in_model=StatusIn, out_model=StatusOut, required=True),
+        "list": Subcommand(in_model=ListFilter, out_model=ListOut, required=False),
     },
 )

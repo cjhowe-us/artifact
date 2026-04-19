@@ -1,7 +1,6 @@
 import pytest
-from pydantic import BaseModel, ValidationError
-
 from artifactlib import validate
+from pydantic import BaseModel, ValidationError
 
 
 class Model(BaseModel):

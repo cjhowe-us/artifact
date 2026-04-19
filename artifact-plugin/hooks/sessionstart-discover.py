@@ -17,9 +17,9 @@ from pathlib import Path
 
 def main() -> int:
     try:
+        import jinja2  # noqa: F401
         import pydantic  # noqa: F401
         import tomlkit  # noqa: F401
-        import jinja2  # noqa: F401
     except ImportError:
         sys.stderr.write(
             "artifact: install deps → python3 -m pip install 'pydantic>=2' tomlkit jinja2\n"

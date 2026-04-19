@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import os
 import subprocess
 import tempfile
@@ -29,10 +30,8 @@ def atomic_write_text(path: Path, text: str) -> None:
             f.write(text)
         os.replace(tmp, path)
     except BaseException:
-        try:
+        with contextlib.suppress(FileNotFoundError):
             os.unlink(tmp)
-        except FileNotFoundError:
-            pass
         raise
 
 
@@ -62,7 +61,5 @@ def try_take_lock(lock_file: Path, owner: str) -> tuple[bool, str]:
 def release_lock(lock_file: Path, owner: str) -> None:
     existing = read_lock_owner(lock_file)
     if not existing or existing == owner:
-        try:
+        with contextlib.suppress(FileNotFoundError):
             lock_file.unlink()
-        except FileNotFoundError:
-            pass

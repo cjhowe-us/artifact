@@ -1,0 +1,25 @@
+target-version = "py311"
+line-length = 100
+
+[lint]
+select = [
+  "E",   # pycodestyle
+  "F",   # pyflakes
+  "I",   # isort
+  "UP",  # pyupgrade
+  "B",   # bugbear
+  "SIM", # simplify
+]
+ignore = [
+  "E501",  # line length handled by formatter
+  "B008",  # Pydantic Field(...) default in signature is idiomatic
+]
+
+[lint.per-file-ignores]
+"**/tests/**" = ["B017"]  # tests can assert blind Exception
+# Storages and run-provider do sys.path setup before importing artifactlib.
+"**/artifact-storage/**/storage.py" = ["E402"]
+"**/scripts/run-provider.py" = ["E402"]
+
+[format]
+quote-style = "double"

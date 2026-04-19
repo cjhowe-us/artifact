@@ -7,7 +7,6 @@ from pathlib import Path
 from artifactlib import scheme as scheme_mod
 from artifactlib.kinds import Kind
 
-
 SCHEMES = Path(__file__).resolve().parent.parent / "artifact-schemes"
 
 

@@ -7,7 +7,6 @@ from typing import Any
 
 from pydantic import BaseModel, ValidationError
 
-
 SCHEMA_MISMATCH_EXIT = 3
 
 

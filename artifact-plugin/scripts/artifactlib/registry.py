@@ -17,7 +17,6 @@ Resolution order for scheme-addressed ops:
 from __future__ import annotations
 
 import json
-import os
 from pathlib import Path
 from typing import Any
 
@@ -74,7 +73,9 @@ def find_scheme(scheme_name: str, registry: dict[str, Any] | None = None) -> dic
     return None
 
 
-def find_storage(storage_name: str, registry: dict[str, Any] | None = None) -> dict[str, Any] | None:
+def find_storage(
+    storage_name: str, registry: dict[str, Any] | None = None
+) -> dict[str, Any] | None:
     for entry in storage_entries(registry):
         if entry.get("name") == storage_name:
             return entry

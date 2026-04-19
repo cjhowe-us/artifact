@@ -14,11 +14,11 @@ import uuid
 from pathlib import Path
 from typing import Any
 
+from pydantic import ValidationError
+
 from . import registry, toml, uri
 from .scheme import Scheme, load_scheme
 from .validate import SCHEMA_MISMATCH_EXIT, emit_schema_mismatch
-
-from pydantic import ValidationError
 
 
 class MediatorError(RuntimeError):
@@ -69,7 +69,11 @@ def dispatch(
         result = _instantiate(scheme, validated, uri_str, storage_override)
         return sub.out_model.model_validate(result).model_dump()
 
-    storage_name = uri.backend_of(uri_str) if uri_str else registry.resolve_storage(scheme_name, storage_override)
+    storage_name = (
+        uri.backend_of(uri_str)
+        if uri_str
+        else registry.resolve_storage(scheme_name, storage_override)
+    )
     if not storage_name:
         raise MediatorError(f"cannot resolve storage for scheme={scheme_name}")
 
@@ -125,10 +129,13 @@ def _load_shipped_template(uri_str: str) -> dict[str, Any] | None:
     return None
 
 
-def _instantiate(template_scheme, validated_input, uri_str: str | None, storage_override: str | None) -> dict[str, Any]:
+def _instantiate(
+    template_scheme, validated_input, uri_str: str | None, storage_override: str | None
+) -> dict[str, Any]:
     """Orchestrate template instantiation across schemes."""
-    from . import render
     from pydantic import create_model
+
+    from . import render
 
     template_uri = getattr(validated_input, "uri", None) or uri_str
     if not template_uri:
@@ -247,7 +254,12 @@ def main_cli(argv: list[str]) -> int:
     except ValidationError as exc:
         emit_schema_mismatch(exc)
         return SCHEMA_MISMATCH_EXIT
-    except (MediatorError, registry.NoStorageForScheme, registry.AmbiguousStorage, registry.RegistryMissing) as exc:
+    except (
+        MediatorError,
+        registry.NoStorageForScheme,
+        registry.AmbiguousStorage,
+        registry.RegistryMissing,
+    ) as exc:
         sys.stdout.write(json.dumps({"error": str(exc)}) + "\n")
         return 2
 
