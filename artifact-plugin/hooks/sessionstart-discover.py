@@ -11,16 +11,13 @@ and exits 0 (non-fatal).
 
 from __future__ import annotations
 
+import importlib.util
 import sys
 from pathlib import Path
 
 
 def main() -> int:
-    try:
-        import jinja2  # noqa: F401
-        import pydantic  # noqa: F401
-        import tomlkit  # noqa: F401
-    except ImportError:
+    if any(importlib.util.find_spec(m) is None for m in ("pydantic", "tomlkit", "jinja2")):
         sys.stderr.write(
             "artifact: install deps → python3 -m pip install 'pydantic>=2' tomlkit jinja2\n"
         )
