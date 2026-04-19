@@ -1,0 +1,27 @@
+{
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.extraPaths": [
+    "artifact-plugin/scripts",
+    "artifact-github-plugin/scripts",
+    "artifact-documents-plugin/scripts"
+  ],
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.diagnosticMode": "workspace",
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": [
+    "artifact-plugin/tests",
+    "artifact-github-plugin/tests",
+    "artifact-documents-plugin/tests"
+  ],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true
+  },
+  "ruff.nativeServer": "on",
+  "mypy-type-checker.args": ["--config-file=pyproject.toml"]
+}

@@ -1,0 +1,31 @@
+{
+  "include": [
+    "artifact-plugin/scripts",
+    "artifact-plugin/artifact-schemes",
+    "artifact-plugin/artifact-storage",
+    "artifact-plugin/hooks",
+    "artifact-plugin/tests",
+    "artifact-github-plugin/scripts",
+    "artifact-github-plugin/artifact-schemes",
+    "artifact-github-plugin/artifact-storage",
+    "artifact-github-plugin/tests",
+    "artifact-documents-plugin/scripts",
+    "artifact-documents-plugin/artifact-schemes",
+    "artifact-documents-plugin/artifact-storage",
+    "artifact-documents-plugin/tests"
+  ],
+  "exclude": [
+    "**/__pycache__",
+    "**/dist",
+    "**/.venv"
+  ],
+  "extraPaths": [
+    "artifact-plugin/scripts",
+    "artifact-github-plugin/scripts",
+    "artifact-documents-plugin/scripts"
+  ],
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "basic",
+  "reportMissingTypeStubs": false,
+  "reportMissingImports": "warning"
+}

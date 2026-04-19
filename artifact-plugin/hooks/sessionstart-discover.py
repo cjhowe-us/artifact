@@ -30,7 +30,7 @@ def main() -> int:
     scripts = here.parent / "scripts"
     sys.path.insert(0, str(scripts))
 
-    from discover import main as discover_main  # type: ignore
+    from discover import main as discover_main
 
     return discover_main()
 

@@ -130,7 +130,10 @@ def _load_shipped_template(uri_str: str) -> dict[str, Any] | None:
 
 
 def _instantiate(
-    template_scheme, validated_input, uri_str: str | None, storage_override: str | None
+    template_scheme: Any,
+    validated_input: Any,
+    uri_str: str | None,
+    storage_override: str | None,
 ) -> dict[str, Any]:
     """Orchestrate template instantiation across schemes."""
     from pydantic import create_model

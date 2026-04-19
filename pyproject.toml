@@ -1,0 +1,44 @@
+# Root-level tooling config. Each plugin keeps its own pyproject.toml for
+# packaging; this file centralizes mypy so all three share one config.
+
+[tool.mypy]
+python_version = "3.11"
+# scheme.py / storage.py files are loaded dynamically via
+# spec_from_file_location (not importable by name — dozens share the filename
+# `scheme` / `storage`), so mypy can't resolve them as modules. They're
+# type-checked in the editor via pyright; here we check the importable
+# Python packages only.
+files = [
+  "artifact-plugin/scripts",
+  "artifact-plugin/hooks",
+  "artifact-github-plugin/scripts",
+  "artifact-documents-plugin/scripts",
+]
+mypy_path = [
+  "artifact-plugin/scripts",
+  "artifact-github-plugin/scripts",
+  "artifact-documents-plugin/scripts",
+]
+exclude = "(^|/)(tests|dist|build|\\.venv)/"
+# Each scheme ships its own `scheme.py` + each storage its own `storage.py`.
+# They are loaded dynamically via `spec_from_file_location`, not via `import`,
+# so treat every directory as its own package root for mypy's sake.
+explicit_package_bases = true
+namespace_packages = true
+# Strictness — keep the core checks on, allow Any where schemes cross dynamic
+# boundaries (spec_from_file_location loads, subprocess payloads, TOML dicts).
+check_untyped_defs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = false
+warn_unreachable = true
+strict_equality = true
+# Third-party stub fallback — pydantic + tomlkit + jinja2 ship their own.
+ignore_missing_imports = false
+
+[[tool.mypy.overrides]]
+module = ["tomlkit.*"]
+ignore_missing_imports = true
