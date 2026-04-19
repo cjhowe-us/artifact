@@ -66,7 +66,7 @@ def dispatch(
 
     # Special cross-scheme subcommand: artifact-template.instantiate.
     if scheme_name == "artifact-template" and subcommand == "instantiate":
-        result = _instantiate(scheme, validated, uri_str, storage_override)
+        result = _instantiate(validated, uri_str, storage_override)
         return sub.out_model.model_validate(result).model_dump()
 
     storage_name = (
@@ -130,7 +130,6 @@ def _load_shipped_template(uri_str: str) -> dict[str, Any] | None:
 
 
 def _instantiate(
-    template_scheme: Any,
     validated_input: Any,
     uri_str: str | None,
     storage_override: str | None,

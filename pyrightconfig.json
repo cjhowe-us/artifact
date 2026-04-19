@@ -27,5 +27,6 @@
   "pythonVersion": "3.11",
   "typeCheckingMode": "basic",
   "reportMissingTypeStubs": false,
-  "reportMissingImports": "warning"
+  "reportMissingImports": "warning",
+  "reportUnusedImport": "none"
 }
