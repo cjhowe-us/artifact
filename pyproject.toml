@@ -34,7 +34,9 @@ no_implicit_optional = true
 warn_redundant_casts = true
 warn_unused_ignores = true
 warn_return_any = false
-warn_unreachable = true
+# Off because storage handlers use dynamic dispatch (getattr → Any) which
+# mypy treats as collapsing narrowing branches to "unreachable".
+warn_unreachable = false
 strict_equality = true
 # Third-party stub fallback — pydantic + tomlkit + jinja2 ship their own.
 ignore_missing_imports = false

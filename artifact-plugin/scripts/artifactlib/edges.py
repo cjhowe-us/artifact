@@ -26,14 +26,14 @@ def make_edge_scheme(relation: str) -> Scheme:
         source=(str, ...),
         target=(str, ...),
         relation=(str, relation),
-        attrs=(dict[str, Any], Field(default_factory=dict)),
+        attrs=(dict[str, Any], Field(default_factory=lambda: {})),
     )
 
     CreateIn = create_model(
         f"{_camel(relation)}EdgeCreateIn",
         source=(str, ...),
         target=(str, ...),
-        attrs=(dict[str, Any], Field(default_factory=dict)),
+        attrs=(dict[str, Any], Field(default_factory=lambda: {})),
     )
 
     class CreateOut(BaseModel):
