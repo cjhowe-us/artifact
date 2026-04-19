@@ -16,3 +16,9 @@ repos:
           - tomlkit>=0.13
           - jinja2>=3.1
         pass_filenames: false
+
+  # Inherit `new-file-tests` from python-plugin instead of duplicating it.
+  - repo: https://github.com/cjhowe-us/python-plugin
+    rev: v0.3.0
+    hooks:
+      - id: new-file-tests

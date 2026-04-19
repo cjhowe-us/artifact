@@ -13,6 +13,7 @@
     "workflow@cjhowe-us-marketplace": true,
     "artifact-github-plugin@cjhowe-us-marketplace": true,
     "artifact-documents-plugin@cjhowe-us-marketplace": true,
+    "python-plugin@cjhowe-us-marketplace": true,
     "rumdl@cjhowe-us-marketplace": true
   }
 }
