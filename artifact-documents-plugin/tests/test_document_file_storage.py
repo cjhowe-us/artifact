@@ -14,6 +14,7 @@ def _load_file_storage():
     spec = importlib.util.spec_from_file_location(
         "_file_storage", REPO_ROOT / "artifact-plugin" / "artifact-storage" / "file" / "storage.py"
     )
+    assert spec and spec.loader
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod

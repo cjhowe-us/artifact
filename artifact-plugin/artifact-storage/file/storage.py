@@ -79,7 +79,7 @@ def _fields_for_templating(
 ) -> dict[str, Any]:
     fields: dict[str, Any] = (
         dict(input_model.model_dump())
-        if hasattr(input_model, "model_dump")
+        if isinstance(input_model, BaseModel)
         else dict(input_model or {})
     )
     if uri_str:

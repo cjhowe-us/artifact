@@ -14,6 +14,7 @@ def _load_user_config_storage():
     spec = importlib.util.spec_from_file_location(
         "_uc_storage", REPO / "artifact-storage" / "user-config" / "storage.py"
     )
+    assert spec and spec.loader
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod

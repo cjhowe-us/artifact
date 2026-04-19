@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib.util
 from pathlib import Path
+from typing import Any
 
 from artifactlib import scheme as scheme_mod
 from artifactlib.edges import make_edge_scheme
@@ -11,10 +12,11 @@ from artifactlib.edges import make_edge_scheme
 REPO = Path(__file__).resolve().parent.parent
 
 
-def _load_storage_module() -> object:
+def _load_storage_module() -> Any:
     spec = importlib.util.spec_from_file_location(
         "_file_storage", REPO / "artifact-storage" / "file" / "storage.py"
     )
+    assert spec and spec.loader
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod

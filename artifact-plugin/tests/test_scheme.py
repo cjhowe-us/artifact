@@ -29,7 +29,9 @@ def test_load_with_toml_config_populates_adapters():
     s = scheme_mod.load_scheme(SCHEMES / "composed_of" / "scheme.py", data)
     assert any(a.name == "file" for a in s.storage_adapters)
     assert s.adapter_for("file") is not None
-    assert s.adapter_for("file").config.get("path_template")
+    adapter = s.adapter_for("file")
+    assert adapter is not None
+    assert adapter.config.get("path_template")
 
 
 def test_load_scheme_rejects_missing_SCHEME(tmp_path):

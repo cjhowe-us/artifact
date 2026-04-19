@@ -28,8 +28,24 @@
     "artifact-documents-plugin/scripts"
   ],
   "pythonVersion": "3.11",
+  "venvPath": ".",
+  "venv": ".venv",
   "typeCheckingMode": "basic",
   "reportMissingTypeStubs": false,
   "reportMissingImports": "warning",
-  "reportUnusedImport": "none"
+  "reportUnusedImport": "none",
+  "executionEnvironments": [
+    {
+      "root": "artifact-plugin/tests",
+      "reportAttributeAccessIssue": "none"
+    },
+    {
+      "root": "artifact-github-plugin/tests",
+      "reportAttributeAccessIssue": "none"
+    },
+    {
+      "root": "artifact-documents-plugin/tests",
+      "reportAttributeAccessIssue": "none"
+    }
+  ]
 }

@@ -3,14 +3,16 @@
 from __future__ import annotations
 
 import sys
-from typing import Any
+from typing import Any, TypeVar
 
 from pydantic import BaseModel, ValidationError
 
 SCHEMA_MISMATCH_EXIT = 3
 
+_ModelT = TypeVar("_ModelT", bound=BaseModel)
 
-def validate(model_cls: type[BaseModel], data: dict[str, Any]) -> BaseModel:
+
+def validate(model_cls: type[_ModelT], data: dict[str, Any]) -> _ModelT:
     """Validate `data` against `model_cls`. On failure, emit schema-mismatch
     JSON to stdout and exit with SCHEMA_MISMATCH_EXIT.
     """
@@ -21,7 +23,7 @@ def validate(model_cls: type[BaseModel], data: dict[str, Any]) -> BaseModel:
         sys.exit(SCHEMA_MISMATCH_EXIT)
 
 
-def validate_raise(model_cls: type[BaseModel], data: dict[str, Any]) -> BaseModel:
+def validate_raise(model_cls: type[_ModelT], data: dict[str, Any]) -> _ModelT:
     """Same as `validate` but re-raises instead of exiting (for library callers)."""
     return model_cls.model_validate(data)
 

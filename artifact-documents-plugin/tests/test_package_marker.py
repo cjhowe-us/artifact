@@ -12,4 +12,4 @@ def test_artifactlib_docs_version_matches_pyproject():
         sys.path.insert(0, str(scripts))
     import artifactlib_docs
 
-    assert artifactlib_docs.__version__ == "2.0.2"
+    assert artifactlib_docs.__version__ == "2.0.3"
