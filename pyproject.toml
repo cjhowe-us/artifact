@@ -44,3 +44,26 @@ ignore_missing_imports = false
 [[tool.mypy.overrides]]
 module = ["tomlkit.*"]
 ignore_missing_imports = true
+
+[tool.coverage.run]
+branch = true
+source = [
+  "artifact-plugin/scripts",
+  "artifact-plugin/hooks",
+  "artifact-github-plugin/scripts",
+  "artifact-documents-plugin/scripts",
+]
+omit = [
+  "*/tests/*",
+  "*/conftest.py",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+exclude_lines = [
+  "pragma: no cover",
+  "raise NotImplementedError",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
