@@ -13,7 +13,7 @@ import json
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, NoReturn
 
 _ONE_VALUE_FLAGS = {
     "--scheme",
@@ -44,7 +44,7 @@ class Args:
         val = self.flags.get(name)
         if not val:
             die(f"{name} required")
-        return val  # type: ignore[return-value]
+        return val
 
 
 def parse(argv: list[str]) -> Args:
@@ -86,7 +86,7 @@ def emit(obj: dict[str, Any]) -> None:
     sys.stdout.flush()
 
 
-def die(msg: str, exit_code: int = 2) -> None:
+def die(msg: str, exit_code: int = 2) -> NoReturn:
     sys.stdout.write(json.dumps({"error": msg}) + "\n")
     sys.stdout.flush()
     sys.exit(exit_code)

@@ -49,12 +49,13 @@ def env() -> jinja2.Environment:
         undefined=jinja2.StrictUndefined,
         autoescape=False,
     )
-    for name, fn in (
-        ("slug", _slug),
-        ("snake", _snake),
-        ("kebab", _kebab),
-        ("json_escape", _json_escape),
-    ):
+    filters: dict[str, Any] = {
+        "slug": _slug,
+        "snake": _snake,
+        "kebab": _kebab,
+        "json_escape": _json_escape,
+    }
+    for name, fn in filters.items():
         e.filters[name] = fn
         e.globals[name] = fn
     return e
