@@ -1,6 +1,6 @@
 {
   "name": "artifact-github-plugin",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "GitHub schemes + storages for the cjhowe-us/artifact-plugin ecosystem. Ships seven vertex schemes (pr, issue, release, milestone, tag, branch, gist) and seven gh-* storages that resolve via the `gh` CLI.",
   "author": {
     "name": "Christian Howe",
@@ -8,7 +8,7 @@
   },
   "license": "Apache-2.0",
   "requires": {
-    "artifact-plugin": ">=2.0.4"
+    "artifact-plugin": ">=2.0.5"
   },
   "keywords": [
     "artifact",

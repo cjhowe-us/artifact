@@ -1,13 +1,13 @@
 [project]
 name = "artifact-documents-plugin"
-version = "2.0.2"
+version = "2.0.5"
 description = "Document scheme + storages + templates for the cjhowe-us/artifact-plugin ecosystem."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "Apache-2.0" }
 authors = [{ name = "Christian Howe", email = "cjhowe@users.noreply.github.com" }]
 dependencies = [
-  "artifact-plugin>=2.0.4",
+  "artifact-plugin>=2.0.5",
 ]
 
 [project.urls]
