@@ -1,17 +1,38 @@
 [project]
 name = "artifact-documents-plugin"
-version = "2.0.1"
+version = "2.0.2"
 description = "Document scheme + storages + templates for the cjhowe-us/artifact-plugin ecosystem."
+readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "Apache-2.0" }
-# Plugin-level dependency on `artifact-plugin` is declared in .claude-plugin/plugin.json
-# (`requires.artifact-plugin`) — installed from the Claude Code marketplace. In-repo
-# tests see the sibling plugin via the `pythonpath` entry below.
-dependencies = []
+authors = [{ name = "Christian Howe", email = "cjhowe@users.noreply.github.com" }]
+dependencies = [
+  "artifact-plugin>=2.0.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/cjhowe-us/artifact-plugin"
+Source = "https://github.com/cjhowe-us/artifact-plugin"
 
 [project.optional-dependencies]
 dev = [
   "pytest>=8",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["scripts/artifactlib_docs"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "scripts/artifactlib_docs",
+  "artifact-schemes",
+  "artifact-storage",
+  "artifact-templates",
+  "README.md",
 ]
 
 [tool.pytest.ini_options]
