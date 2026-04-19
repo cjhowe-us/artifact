@@ -40,7 +40,7 @@ jobs:
             ~/.cache/pip
             ~/AppData/Local/pip/Cache
             ~/Library/Caches/pip
-          key: pip-${{ runner.os }}-py${{ matrix.python }}-${{ hashFiles('artifact/pyproject.toml', 'artifact-documents/pyproject.toml', 'artifact-github/pyproject.toml') }}
+          key: pip-${{ runner.os }}-py${{ matrix.python }}-${{ hashFiles('artifact-plugin/pyproject.toml', 'artifact-documents-plugin/pyproject.toml', 'artifact-github-plugin/pyproject.toml') }}
           restore-keys: |
             pip-${{ runner.os }}-py${{ matrix.python }}-
 
@@ -50,7 +50,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .venv
-          key: venv-${{ runner.os }}-py${{ matrix.python }}-${{ hashFiles('artifact/pyproject.toml', 'artifact-documents/pyproject.toml', 'artifact-github/pyproject.toml') }}
+          key: venv-${{ runner.os }}-py${{ matrix.python }}-${{ hashFiles('artifact-plugin/pyproject.toml', 'artifact-documents-plugin/pyproject.toml', 'artifact-github-plugin/pyproject.toml') }}
 
       - name: Create venv + install deps
         if: steps.cache-venv.outputs.cache-hit != 'true'
@@ -71,4 +71,4 @@ jobs:
         shell: bash
         run: |
           source .venv/bin/activate 2>/dev/null || source .venv/Scripts/activate
-          python -m pytest -q artifact/tests artifact-documents/tests artifact-github/tests
+          python -m pytest -q artifact-plugin/tests artifact-documents-plugin/tests artifact-github-plugin/tests

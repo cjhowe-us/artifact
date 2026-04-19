@@ -5,12 +5,12 @@ user-authored scheme — from a Claude Code session. Artifacts form a typed know
 
 | Plugin                                       | Purpose                                                                                                                                    |
 |----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| [`artifact`](./artifact)                     | Core primitive: scheme kinds (vertex/edge/metadata), Pydantic scheme loader, generic storages (`file`, `user-config`, `session-memory`, `os-notifications`), jinja templating, `/artifact` skill. |
-| [`artifact-github`](./artifact-github)       | GitHub-backed storages (`gh-pr`, `gh-issue`, `gh-release`, `gh-milestone`, `gh-tag`, `gh-branch`, `gh-gist`) for the corresponding schemes. Requires `artifact`. |
-| [`artifact-documents`](./artifact-documents) | `document` scheme + `document-confluence` storage + eight markdown templates. Requires `artifact`.                                         |
+| [`artifact`](./artifact-plugin)                     | Core primitive: scheme kinds (vertex/edge/metadata), Pydantic scheme loader, generic storages (`file`, `user-config`, `session-memory`, `os-notifications`), jinja templating, `/artifact` skill. |
+| [`artifact-github`](./artifact-github-plugin)       | GitHub-backed storages (`gh-pr`, `gh-issue`, `gh-release`, `gh-milestone`, `gh-tag`, `gh-branch`, `gh-gist`) for the corresponding schemes. Requires `artifact`. |
+| [`artifact-documents`](./artifact-documents-plugin) | `document` scheme + `document-confluence` storage + eight markdown templates. Requires `artifact`.                                         |
 
-See [`artifact/DESIGN.md`](./artifact/DESIGN.md) for the architectural source of truth — scheme kinds, storage adapters,
-URI format (`<scheme>|<storage>/<path>`), the graph-as-artifacts model, and local state layout.
+See [`artifact/DESIGN.md`](./artifact-plugin/DESIGN.md) for the architectural source of truth — scheme kinds, storage
+adapters, URI format (`<scheme>|<storage>/<path>`), the graph-as-artifacts model, and local state layout.
 
 ## Install
 

@@ -10,7 +10,7 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-RUNNER = REPO_ROOT / "artifact" / "scripts" / "run-provider.py"
+RUNNER = REPO_ROOT / "artifact-plugin" / "scripts" / "run-provider.py"
 
 
 def _run(argv: list[str], *, payload: dict, cwd: Path, env: dict) -> tuple[int, dict, str]:

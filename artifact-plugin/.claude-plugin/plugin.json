@@ -1,0 +1,18 @@
+{
+  "name": "artifact-plugin",
+  "version": "2.0.1",
+  "description": "Core artifact primitive for the cjhowe-us/artifact-plugin ecosystem. Three scheme kinds (vertex, edge, metadata), Pydantic-defined schemes, generic storages (file, user-config, session-memory, os-notifications), jinja2 templating via .jinja.<ext>, graph-as-artifacts. Python 3.11+; depends on nothing. Every other plugin in the ecosystem depends on this.",
+  "author": {
+    "name": "Christian Howe",
+    "email": "cjhowe@users.noreply.github.com"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "artifact",
+    "scheme",
+    "storage",
+    "template",
+    "graph",
+    "pydantic"
+  ]
+}

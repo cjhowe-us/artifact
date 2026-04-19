@@ -1,0 +1,19 @@
+[project]
+name = "artifact-documents-plugin"
+version = "2.0.1"
+description = "Document scheme + storages + templates for the cjhowe-us/artifact-plugin ecosystem."
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+# Plugin-level dependency on `artifact-plugin` is declared in .claude-plugin/plugin.json
+# (`requires.artifact-plugin`) — installed from the Claude Code marketplace. In-repo
+# tests see the sibling plugin via the `pythonpath` entry below.
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["scripts", "../artifact-plugin/scripts"]

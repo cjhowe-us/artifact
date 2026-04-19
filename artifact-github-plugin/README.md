@@ -1,6 +1,6 @@
 # artifact-github
 
-GitHub schemes + storages for the `cjhowe-us/artifact` ecosystem.
+GitHub schemes + storages for the `cjhowe-us/artifact-plugin` ecosystem.
 
 ## Schemes (vertex-kind)
 

@@ -1,6 +1,6 @@
 # artifact
 
-Core artifact primitive for the `cjhowe-us/artifact` ecosystem. Ships:
+Core artifact primitive for the `cjhowe-us/artifact-plugin` ecosystem. Ships:
 
 - **Scheme kinds** — `vertex`, `edge`, `metadata`. Every scheme declares one.
 - **Core schemes** — `artifact-template`, `pydantic-schema`, `preferences`, `conversation`, `notifications`. Plus nine

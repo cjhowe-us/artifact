@@ -1,6 +1,6 @@
 # artifact-documents
 
-Document scheme + storages + templates for the `cjhowe-us/artifact` ecosystem.
+Document scheme + storages + templates for the `cjhowe-us/artifact-plugin` ecosystem.
 
 ## Schemes
 

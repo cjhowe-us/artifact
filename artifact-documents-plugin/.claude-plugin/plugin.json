@@ -1,0 +1,19 @@
+{
+  "name": "artifact-documents-plugin",
+  "version": "2.0.1",
+  "description": "Document scheme + storages + templates for the cjhowe-us/artifact-plugin ecosystem. Ships a `document` vertex scheme (markdown body + structured content, pydantic-validated), a `document-confluence` storage (Confluence Cloud REST v2), and eight jinja2 markdown templates (design-document, implementation-plan, review-note, release-note, test-plan, requirement, user-story, triage-note).",
+  "author": {
+    "name": "Christian Howe",
+    "email": "cjhowe@users.noreply.github.com"
+  },
+  "license": "Apache-2.0",
+  "requires": {
+    "artifact-plugin": ">=2.0.1"
+  },
+  "keywords": [
+    "artifact",
+    "document",
+    "template",
+    "confluence"
+  ]
+}

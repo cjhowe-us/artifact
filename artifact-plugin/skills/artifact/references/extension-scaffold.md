@@ -65,5 +65,5 @@ the exact snippet.
 ## Conformance
 
 Scaffolded plugins pass the pytest suite out of the box — empty contribution sets are valid. CI should run
-`pytest artifact/tests/ artifact-documents/tests/ artifact-github/tests/` across the OS matrix
+`pytest artifact-plugin/tests/ artifact-documents-plugin/tests/ artifact-github-plugin/tests/` across the OS matrix
 `{ubuntu, macos, windows}`.

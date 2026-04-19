@@ -13,7 +13,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 
 def _load_file_storage():
     spec = importlib.util.spec_from_file_location(
-        "_file_storage", REPO_ROOT / "artifact" / "artifact-storage" / "file" / "storage.py"
+        "_file_storage", REPO_ROOT / "artifact-plugin" / "artifact-storage" / "file" / "storage.py"
     )
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
@@ -23,7 +23,7 @@ def _load_file_storage():
 def test_document_create_and_get(tmp_worktree: Path):
     storage = _load_file_storage()
     doc_scheme = scheme_mod.load_scheme(
-        REPO_ROOT / "artifact-documents" / "artifact-schemes" / "document" / "scheme.py"
+        REPO_ROOT / "artifact-documents-plugin" / "artifact-schemes" / "document" / "scheme.py"
     )
     adapter = {
         "body_field": "body",
