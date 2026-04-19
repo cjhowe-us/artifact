@@ -5,4 +5,4 @@ Claude Code runtime. The runtime loads them from filesystem paths, so the
 Python-importable surface is intentionally minimal.
 """
 
-__version__ = "2.0.3"
+__version__ = "2.0.4"
