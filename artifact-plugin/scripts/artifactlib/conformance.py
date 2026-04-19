@@ -45,9 +45,7 @@ def round_trip_create_get(
 
     get_sub = scheme.subcommands["get"]
     get_in = get_sub.in_model.model_validate({"uri": uri})
-    get_out = storage_module.cmd_get(
-        scheme=scheme, adapter=adapter, input=get_in, uri=uri
-    )
+    get_out = storage_module.cmd_get(scheme=scheme, adapter=adapter, input=get_in, uri=uri)
     if hasattr(get_out, "model_dump"):
         get_out = get_out.model_dump()
     return get_out

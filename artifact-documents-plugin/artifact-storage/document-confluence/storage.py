@@ -14,7 +14,6 @@ import os
 import urllib.error
 import urllib.request
 from base64 import b64encode
-from typing import Any
 
 from artifactlib import uri as uri_mod
 
@@ -31,7 +30,7 @@ def _creds() -> tuple[str, str, str]:
 
 
 def _auth_header(user: str, token: str) -> str:
-    raw = f"{user}:{token}".encode("utf-8")
+    raw = f"{user}:{token}".encode()
     return "Basic " + b64encode(raw).decode("ascii")
 
 
@@ -49,7 +48,9 @@ def _request(method: str, url: str, body: dict | None = None) -> dict:
             txt = resp.read().decode("utf-8")
             return json.loads(txt) if txt else {}
     except urllib.error.HTTPError as exc:
-        raise RuntimeError(f"confluence {method} {url} → {exc.code}: {exc.read().decode()}")
+        raise RuntimeError(
+            f"confluence {method} {url} → {exc.code}: {exc.read().decode()}"
+        ) from exc
 
 
 def _parse_id(uri_str: str) -> tuple[str, str]:

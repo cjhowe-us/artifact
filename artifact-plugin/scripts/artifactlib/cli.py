@@ -15,7 +15,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-
 _ONE_VALUE_FLAGS = {
     "--scheme",
     "--uri",
@@ -76,10 +75,7 @@ def parse(argv: list[str]) -> Args:
 def read_json_arg(path_or_dash: str | None) -> dict[str, Any]:
     if not path_or_dash:
         return {}
-    if path_or_dash == "-":
-        raw = sys.stdin.read()
-    else:
-        raw = Path(path_or_dash).read_text()
+    raw = sys.stdin.read() if path_or_dash == "-" else Path(path_or_dash).read_text()
     if not raw.strip():
         return {}
     return json.loads(raw)

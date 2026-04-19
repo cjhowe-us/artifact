@@ -20,9 +20,14 @@ def resolve() -> Dirs:
     home = Path.home()
 
     if system == "Darwin":
-        config = Path(os.environ.get("ARTIFACT_CONFIG_DIR") or home / "Library/Application Support/artifact")
+        config = Path(
+            os.environ.get("ARTIFACT_CONFIG_DIR") or home / "Library/Application Support/artifact"
+        )
         cache = Path(os.environ.get("ARTIFACT_CACHE_DIR") or home / "Library/Caches/artifact")
-        state = Path(os.environ.get("ARTIFACT_STATE_DIR") or home / "Library/Application Support/artifact/state")
+        state = Path(
+            os.environ.get("ARTIFACT_STATE_DIR")
+            or home / "Library/Application Support/artifact/state"
+        )
     elif system == "Windows":
         appdata = Path(os.environ.get("APPDATA") or home / "AppData/Roaming")
         localappdata = Path(os.environ.get("LOCALAPPDATA") or home / "AppData/Local")

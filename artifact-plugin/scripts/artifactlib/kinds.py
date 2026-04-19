@@ -7,10 +7,10 @@ Metadata — a typed annotation attached to one target artifact.
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
 
-class Kind(str, Enum):
+class Kind(StrEnum):
     VERTEX = "vertex"
     EDGE = "edge"
     METADATA = "metadata"

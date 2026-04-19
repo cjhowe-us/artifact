@@ -35,12 +35,18 @@ def cmd_create(*, scheme, adapter, input, uri):
         raise ValueError("gh-pr create requires id='owner/repo'")
     owner, repo = owner_repo.split("/", 1)
     argv = [
-        "pr", "create",
-        "--repo", f"{owner}/{repo}",
-        "--title", fields.get("title", ""),
-        "--body", fields.get("body", ""),
-        "--base", fields.get("base") or "main",
-        "--head", fields.get("head") or "",
+        "pr",
+        "create",
+        "--repo",
+        f"{owner}/{repo}",
+        "--title",
+        fields.get("title", ""),
+        "--body",
+        fields.get("body", ""),
+        "--base",
+        fields.get("base") or "main",
+        "--head",
+        fields.get("head") or "",
     ]
     if not fields.get("head"):
         raise ValueError("gh-pr create requires `head` (source branch)")
@@ -52,11 +58,17 @@ def cmd_create(*, scheme, adapter, input, uri):
 
 def cmd_get(*, scheme, adapter, input, uri):
     owner, repo, num = _parse_pr_uri(uri or input.uri)
-    data = gh.run_json([
-        "pr", "view", str(num),
-        "--repo", f"{owner}/{repo}",
-        "--json", "title,body,state,url,number,baseRefName,headRefName",
-    ])
+    data = gh.run_json(
+        [
+            "pr",
+            "view",
+            str(num),
+            "--repo",
+            f"{owner}/{repo}",
+            "--json",
+            "title,body,state,url,number,baseRefName,headRefName",
+        ]
+    )
     content = {
         "title": data.get("title", ""),
         "body": data.get("body", "") or "",
@@ -73,11 +85,17 @@ def cmd_get(*, scheme, adapter, input, uri):
 def cmd_status(*, scheme, adapter, input, uri):
     try:
         owner, repo, num = _parse_pr_uri(uri or getattr(input, "uri", ""))
-        gh.run_json([
-            "pr", "view", str(num),
-            "--repo", f"{owner}/{repo}",
-            "--json", "state",
-        ])
+        gh.run_json(
+            [
+                "pr",
+                "view",
+                str(num),
+                "--repo",
+                f"{owner}/{repo}",
+                "--json",
+                "state",
+            ]
+        )
         return {"uri": uri or "", "status": "complete"}
     except Exception:
         return {"uri": uri or "", "status": "unknown"}
@@ -89,20 +107,27 @@ def cmd_list(*, scheme, adapter, input, uri):
     if not (owner and repo):
         return {"entries": []}
     try:
-        data = gh.run_json([
-            "pr", "list",
-            "--repo", f"{owner}/{repo}",
-            "--json", "number,title,state,url",
-        ])
+        data = gh.run_json(
+            [
+                "pr",
+                "list",
+                "--repo",
+                f"{owner}/{repo}",
+                "--json",
+                "number,title,state,url",
+            ]
+        )
     except Exception:
         return {"entries": []}
     entries = []
     for p in data or []:
-        entries.append({
-            "uri": f"{scheme.name}|gh-pr/{owner}/{repo}/{p['number']}",
-            "kind": scheme.kind.value,
-            "summary": {"title": p.get("title", ""), "state": p.get("state", "")},
-        })
+        entries.append(
+            {
+                "uri": f"{scheme.name}|gh-pr/{owner}/{repo}/{p['number']}",
+                "kind": scheme.kind.value,
+                "summary": {"title": p.get("title", ""), "state": p.get("state", "")},
+            }
+        )
     return {"entries": entries}
 
 

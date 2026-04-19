@@ -90,5 +90,7 @@ def cmd_list(*, scheme, adapter, input, uri):
                 continue
             rel = p.relative_to(root)
             art_id = str(rel).split(".", 1)[0]
-            entries.append({"uri": f"{scheme.name}|user-config/{art_id}", "kind": scheme.kind.value})
+            entries.append(
+                {"uri": f"{scheme.name}|user-config/{art_id}", "kind": scheme.kind.value}
+            )
     return {"entries": entries}

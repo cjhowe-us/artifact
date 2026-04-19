@@ -14,11 +14,11 @@ from typing import Any
 
 import jinja2
 
-
 _SLUG_NONWORD = re.compile(r"[^a-zA-Z0-9]+")
 
 
 # ---------- filters ----------------------------------------------------------
+
 
 def _slug(value: Any) -> str:
     s = str(value).strip().lower()
@@ -49,13 +49,19 @@ def env() -> jinja2.Environment:
         undefined=jinja2.StrictUndefined,
         autoescape=False,
     )
-    for name, fn in (("slug", _slug), ("snake", _snake), ("kebab", _kebab), ("json_escape", _json_escape)):
+    for name, fn in (
+        ("slug", _slug),
+        ("snake", _snake),
+        ("kebab", _kebab),
+        ("json_escape", _json_escape),
+    ):
         e.filters[name] = fn
         e.globals[name] = fn
     return e
 
 
 # ---------- rendering --------------------------------------------------------
+
 
 def render_string(template: str, context: dict[str, Any]) -> str:
     return env().from_string(template).render(**context)
@@ -76,6 +82,7 @@ def render_tree(value: Any, context: dict[str, Any]) -> Any:
 
 
 # ---------- .jinja. filename convention -------------------------------------
+
 
 def is_jinja(path: str | Path) -> bool:
     """True if the filename contains ``.jinja.`` before its terminal extension."""

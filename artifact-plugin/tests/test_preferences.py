@@ -3,11 +3,9 @@
 from __future__ import annotations
 
 import importlib.util
-import os
 from pathlib import Path
 
 from artifactlib import scheme as scheme_mod
-
 
 REPO = Path(__file__).resolve().parent.parent
 

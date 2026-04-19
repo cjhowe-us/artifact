@@ -7,7 +7,6 @@ from pathlib import Path
 
 from artifactlib import scheme as scheme_mod
 
-
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 
 

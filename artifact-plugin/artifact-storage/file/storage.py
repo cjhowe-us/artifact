@@ -27,20 +27,19 @@ the template's static suffix stripped.
 
 from __future__ import annotations
 
+import contextlib
 import json
 import re
 import subprocess
 from pathlib import Path
 from typing import Any
 
-from pydantic import BaseModel
-
 from artifactlib import render
 from artifactlib import uri as uri_mod
 from artifactlib.io import read_lock_owner, release_lock, try_take_lock
 from artifactlib.toml import atomic_write as toml_write
 from artifactlib.toml import load as toml_load
-
+from pydantic import BaseModel
 
 # ---------- helpers ----------------------------------------------------------
 
@@ -195,9 +194,7 @@ def cmd_create(*, scheme, adapter, input, uri):
         # Split-shape URI path = input's `id` (required). Get re-renders both templates.
         art_id = fields.get("id")
         if not art_id:
-            raise ValueError(
-                "file-storage split shape requires an `id` field in the create input"
-            )
+            raise ValueError("file-storage split shape requires an `id` field in the create input")
     else:
         path_template = adapter["path_template"]
         rel = _render_path(path_template, fields)
@@ -224,9 +221,7 @@ def cmd_get(*, scheme, adapter, input, uri):
         if content_template:
             content_path = root / _render_path(content_template, fields)
             if content_path.is_file():
-                content = _deserialize(
-                    content_path, adapter.get("content_serializer") or "toml"
-                )
+                content = _deserialize(content_path, adapter.get("content_serializer") or "toml")
         body_field = adapter.get("body_field")
         if body_field:
             content = {**content, body_field: body_value}
@@ -269,9 +264,7 @@ def cmd_list(*, scheme, adapter, input, uri):
     """Enumerate by glob on the template's literal prefix, filter post-hoc."""
     root = _root()
     shape = _adapter_shape(adapter)
-    template = (
-        adapter["body_path_template"] if shape == "split" else adapter["path_template"]
-    )
+    template = adapter["body_path_template"] if shape == "split" else adapter["path_template"]
     prefix_end = template.find("{{")
     prefix = template[:prefix_end] if prefix_end != -1 else template
     suffix = _template_suffix(template)
@@ -305,19 +298,15 @@ def cmd_list(*, scheme, adapter, input, uri):
             continue
         art_id = str(rel).removesuffix(suffix)
         uri_str = f"{scheme.name}|file/{art_id}"
-        try:
+        with contextlib.suppress(Exception):
             content = _deserialize(p, adapter.get("serializer") or "json")
-        except Exception:
-            pass
 
         if filter_source is not None and content.get("source") != filter_source:
             continue
         if filter_target is not None and content.get("target") != filter_target:
             continue
 
-        entries.append(
-            {"uri": uri_str, "kind": scheme.kind.value, "content": content}
-        )
+        entries.append({"uri": uri_str, "kind": scheme.kind.value, "content": content})
 
     return {"entries": entries}
 

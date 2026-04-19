@@ -6,6 +6,7 @@ Writing goes through tomlkit so comments + key order survive.
 
 from __future__ import annotations
 
+import contextlib
 import os
 import tempfile
 import tomllib
@@ -48,8 +49,6 @@ def atomic_write(path: Path, data: dict[str, Any] | tomlkit.TOMLDocument) -> Non
             f.write(text)
         os.replace(tmp, path)
     except BaseException:
-        try:
+        with contextlib.suppress(FileNotFoundError):
             os.unlink(tmp)
-        except FileNotFoundError:
-            pass
         raise
